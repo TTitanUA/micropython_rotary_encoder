@@ -7,7 +7,7 @@ class RotaryEncoderEvent:
     CLICK = 2
     MULTIPLE_CLICK = 3
     HELD = 4
-    RELEASE = 5
+    RELEASED = 5
     TURN_LEFT = 6
     TURN_LEFT_FAST = 7
     TURN_LEFT_HOLD = 8
@@ -74,8 +74,8 @@ class RotaryEncoder:
 
     def __init__(
             self,
-            pin_clk: Pin,
-            pin_dt: Pin,
+            pin_clk: Pin = None,
+            pin_dt: Pin = None,
             pin_sw: Pin = None,
             debounce_ms: int = 50,
             encoder_step: int = 1,
@@ -94,15 +94,23 @@ class RotaryEncoder:
         self.enc_fast_ms = fast_ms
         self.sw_click_ms = click_ms
 
-    def on(self, event: int, callback):
+    def on(self, event: int, callback: callable):
         if event not in self._listeners:
             self._listeners[event] = []
 
         self._listeners[event].append(callback)
 
-    def off(self, event: int, callback):
+    def off(self, event: int, callback: callable):
         if event in self._listeners:
             self._listeners[event].remove(callback)
+
+    def off_all(self, event: int, callback: callable = None):
+        if event in self._listeners:
+            if callback is None:
+                self._listeners[event] = []
+            else:
+                while callback in self._listeners[event]:
+                    self._listeners[event].remove(callback)
 
     def _sw_irq_handler(self, pin):
         timestamp = utime.ticks_ms()
@@ -143,7 +151,7 @@ class RotaryEncoder:
             # button held
             if utime.ticks_diff(utime.ticks_ms(), __sw_l_e_ms) > self.sw_hold_ms and not self._sw_held:
                 self._sw_held = True
-                self._flag_last_event = RotaryEncoderEvent.HOLD
+                self._flag_last_event = RotaryEncoderEvent.HELD
             # it's a multiple click
             elif utime.ticks_diff(__sw_l_e_ms, self._sw_prev_event_ms) < __sw_s_ms:
                 self._sw_prev_event_ms = 1
@@ -151,11 +159,13 @@ class RotaryEncoder:
             # button release
             if self._sw_held:
                 self._sw_held = False
-                self._flag_last_event = RotaryEncoderEvent.RELEASE
+                self._flag_last_event = RotaryEncoderEvent.RELEASED
                 self._sw_prev_state = __sw_l_s
             # maybe a multiple click, need wait for the next event
             elif utime.ticks_diff(timestamp, __sw_l_e_ms) < __sw_s_ms:
                 if __sw_p_e_ms == 1:
+                    if self._sw_clicks == 0:
+                        self._sw_clicks = 1
                     self._sw_clicks += 1
                 self._sw_prev_event_ms = timestamp
             # maybe a single click
@@ -199,8 +209,13 @@ class RotaryEncoder:
         # local cache
         __e_l_d = self._enc_last_dir
 
+        # @FIXME: It is a crunch, but it works for now
         # 15ms it's a time for one step
-        fast_turn_count = (self.enc_fast_ms // 15)
+        if self.enc_fast_ms == 0:
+            fast_turn_count = 1000
+        else:
+            fast_turn_count = (self.enc_fast_ms // 15)
+
         if __e_l_d > 0:
             if __e_l_d > fast_turn_count:
                 if self._sw_held_with_encoder:
@@ -234,13 +249,13 @@ class RotaryEncoder:
 
         if self.__encoder_has_event() and utime.ticks_diff(utime.ticks_ms(),
                                                            self._enc_last_event_ms) > self.enc_fast_ms:
-            self._enc_tick_process_turn_event()
 
+            self._enc_tick_process_turn_event()
         if self._flag_last_event != 0:
             try:
                 self.__call_listeners()
             except Exception as e:
-                print(f"Exception: {e}")
+                print(f"RotaryEncoder call listeners error: {e}")
 
             if self._flag_last_event == RotaryEncoderEvent.MULTIPLE_CLICK:
                 self._sw_clicks = 0

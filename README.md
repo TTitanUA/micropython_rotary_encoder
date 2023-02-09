@@ -22,9 +22,9 @@ The following materials were used to develop the library:
 - Rotary Encoder EC11 (KY-040)
 
 On the hardware above the library has been tested and works correctly.
-Но с не большими костылями она может работать и на другом оборудовании.
+But with small crutches, it can work on other equipment.
 
-### ВНИМАНИЕ
+### ATTENTION
 You use this module at your own risk. 
 My experience in MicroPython programming is the whole 7 days. So there may be nuances that I haven't considered.
 If you notice a bug or have suggestions for improvement, write to Issues.
@@ -189,11 +189,11 @@ encoder.on(RotaryEncoderEvent.MULTIPLE_CLICK, on_multy_clicks)
 encoder.on(RotaryEncoderEvent.ANY, on_any)
 ```
 
-### Отписка от событий
-Для отписки от событий нужно использовать метод `off(event, callback)`, который принимает два парамера. 
-- `event` - событие, свойство класса `RotaryEncoderEvent`.
-- `callback` - ссылка на функцию, которая была зарегистрирована ранее.
-За один вызов метода, происходит отписка только одного коллбека от одного события.
+### Unsubscribing from events
+To unsubscribe from events, you need to use the `off(event, callback)` method, which takes two parameters.
+- `event` - event, property of the `RotaryEncoderEvent` class.
+- `callback` - a link to a function that was registered earlier.
+For one method call, only one callback from one event is unsubscribed.
 
 ```python
 # ----
