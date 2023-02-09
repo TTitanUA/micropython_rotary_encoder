@@ -30,10 +30,9 @@
 
 ## Содержание
 - [Установка](#install)
-- [Введение](#base)
 - [Инициализация](#init)
 - [Документация](#doc)
-- [Примеры](https://github.com/TTitanUA/micropython_rotary_encoder/examples/)
+- [Примеры](https://github.com/TTitanUA/micropython_rotary_encoder/tree/main/examples)
 - [Баги и обратная связь](#feedback)
 
 <a id="install"></a>
@@ -46,7 +45,7 @@
 
 Если хотите поиграться с логикой библиотеки, то 2й вариант установки предпочтительнее. :)
 
-<a id="base"></a>
+<a id="init"></a>
 ## Использование
 ### Инициализация
 ```python
@@ -238,7 +237,7 @@ encoder.off_all(RotaryEncoderEvent.CLICK) # unsubscribe all listeners from event
 ```
 
 ## Примеры
-Примеры использования энкодера можно найти в папке [examples](https://github.com/TTitanUA/micropython_rotary_encoder/examples).
+Примеры использования энкодера можно найти в папке [examples](https://github.com/TTitanUA/micropython_rotary_encoder/tree/main/examples).
 
 <a id="feedback"></a>
 ## Баги и обратная связь

@@ -31,10 +31,9 @@ If you notice a bug or have suggestions for improvement, write to Issues.
 
 ## Contents
 - [Install](#install)
-- [Introduction](#base)
 - [Initialization](#init)
 - [Documentation](#doc)
-- [Examples](https://github.com/TTitanUA/micropython_rotary_encoder/examples/)
+- [Examples](https://github.com/TTitanUA/micropython_rotary_encoder/tree/main/examples)
 - [Bugs and feedback](#feedback)
 
 <a id="install"></a>
@@ -47,7 +46,7 @@ If you notice a bug or have suggestions for improvement, write to Issues.
 
 If you want to play around with the logic of the library, then the 2nd installation option is preferable. :)
 
-<a id="base"></a>
+<a id="init"></a>
 ## Usage
 ### Initialization
 ```python
@@ -238,7 +237,7 @@ encoder.off_all(RotaryEncoderEvent.CLICK) # unsubscribe all listeners from event
 ```
 
 ## Examples
-Examples of using the encoder can be found in the [examples] folder (https://github.com/TTitanUA/micropython_rotary_encoder/examples).
+Examples of using the encoder can be found in the [examples](https://github.com/TTitanUA/micropython_rotary_encoder/tree/main/examples) folder.
 
 <a id="feedback"></a>
 ## Bugs and feedback
