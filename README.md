@@ -30,11 +30,11 @@ My experience in MicroPython programming is the whole 7 days. So there may be nu
 If you notice a bug or have suggestions for improvement, write to Issues.
 
 ## Contents
-- [Install](#install)
-- [Initialization](#init)
-- [Documentation](#doc)
+- [Install](https://github.com/TTitanUA/micropython_rotary_encoder#install)
+- [Initialization](https://github.com/TTitanUA/micropython_rotary_encoder#init)
+- [Documentation](https://github.com/TTitanUA/micropython_rotary_encoder#doc)
 - [Examples](https://github.com/TTitanUA/micropython_rotary_encoder/tree/main/examples)
-- [Bugs and feedback](#feedback)
+- [Bugs and feedback](https://github.com/TTitanUA/micropython_rotary_encoder#feedback)
 
 <a id="install"></a>
 ## Installation
