@@ -39,7 +39,7 @@ If you notice a bug or have suggestions for improvement, write to Issues.
 
 <a id="install"></a>
 ## Installation
-- Install the library via pip (Thonny -> Manage Packages) by name **micropython_rotary_encoder**
+- Install the library via pip (Thonny -> Manage Packages) by name **micropython-rotary-encoder**
 - Or manual installation:
    - [Download library from github](https://github.com/TTitanUA/micropython_rotary_encoder/)
    - take the **micropython_rotary_encoder** folder from the archive.

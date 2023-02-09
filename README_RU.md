@@ -38,7 +38,7 @@
 
 <a id="install"></a>
 ## Установка
-- Библиотеку установить через pip (Thonny -> Manage Packages) по названию **micropython_rotary_encoder** 
+- Библиотеку установить через pip (Thonny -> Manage Packages) по названию **micropython-rotary-encoder** 
 - Или ручная установка:
   - [Скачать библиотеку с github](https://github.com/TTitanUA/micropython_rotary_encoder/) 
   - забрать папку **micropython_rotary_encoder** из архива.
