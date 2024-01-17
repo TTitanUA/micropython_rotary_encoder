@@ -98,11 +98,11 @@ class RotaryEncoder:
         if event not in self._listeners:
             self._listeners[event] = []
 
-        self._listeners[event].append(callback)
+        self._listeners[event].append((callback, self.pin_clk))
 
     def off(self, event: int, callback: callable):
         if event in self._listeners:
-            self._listeners[event].remove(callback)
+            self._listeners[event].remove((callback, self.pin_clk))
 
     def off_all(self, event: int, callback: callable = None):
         if event in self._listeners:
@@ -110,7 +110,7 @@ class RotaryEncoder:
                 self._listeners[event] = []
             else:
                 while callback in self._listeners[event]:
-                    self._listeners[event].remove(callback)
+                    self._listeners[event].remove((callback, self.pin_clk))
 
     def _sw_irq_handler(self, pin):
         timestamp = utime.ticks_ms()
@@ -275,19 +275,21 @@ class RotaryEncoder:
 
             if __l_e in __list:
                 for __l in __list[__l_e]:
-                    try:
-                        if __l_e == __m_c_e:
-                            __l(__sw_c)
-                        else:
-                            __l()
-                    except Exception as e:
-                        print(f"RotaryEncoder callback error. Event: {__l_e}, Listener: {__l}, Error: {e}")
+                    if __l[1] == self.pin_clk:
+                        try:
+                            if __l_e == __m_c_e:
+                                __l[0](__sw_c)
+                            else:
+                                __l[0]()
+                        except Exception as e:
+                            print(f"RotaryEncoder callback error. Event: {__l_e}, Listener: {__l}, Error: {e}")
             if __e_e in __list:
                 for __l in __list[__e_e]:
-                    try:
-                        if __l_e == __m_c_e:
-                            __l(__l_e, __sw_c)
-                        else:
-                            __l(__l_e, 0)
-                    except Exception as e:
-                        print(f"RotaryEncoder callback error. Event: {__e_e}, Listener: {__l}, Error: {e}")
+                    if __l[1] == self.pin_clk:
+                        try:
+                            if __l_e == __m_c_e:
+                                __l[0](__l_e, __sw_c)
+                            else:
+                                __l[0](__l_e, 0)
+                        except Exception as e:
+                            print(f"RotaryEncoder callback error. Event: {__e_e}, Listener: {__l}, Error: {e}")
